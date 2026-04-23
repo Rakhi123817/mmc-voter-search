@@ -109,14 +109,22 @@ input.err{border-color:var(--red);background:rgba(239,68,68,.07)}
 
 .poster-img {
   width: 100%;
-  max-width: 520px;
+  max-width: 700px;   /* 🔥 increased from 520 → wider desktop */
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 @media (max-width: 768px) {
 
+  .poster-img {
+    width: 95%;   /* slight margin for premium feel */
+  }
+
+  .poster-wrap {
+    margin: 20px auto 5px;  /* tighter spacing */
+  }
+  
   .htop {
     padding: 10px 16px;   /* reduced from 13px 28px */
   }
