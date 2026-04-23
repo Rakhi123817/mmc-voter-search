@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MMC Voter Assistance 2026</title>
+</head>
+
+<body style="font-family:Arial;text-align:center;margin-top:60px;">
+
+<h2>MMC Voter Assistance 2026</h2>
+
+<input id="reg" placeholder="Registration Number"><br><br>
+<input id="mobile" placeholder="Mobile Number"><br><br>
+
+<button onclick="search()">Search</button>
+
+<p style="font-size:12px;">
+Mobile number is collected only for voter assistance purposes.
+</p>
+
+<div id="result"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
