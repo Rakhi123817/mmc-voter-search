@@ -109,10 +109,42 @@ input.err{border-color:var(--red);background:rgba(239,68,68,.07)}
 
 .poster-img {
   width: 100%;
-  max-width: 520px;   /* 🔥 controls desktop size */
+  max-width: 520px;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 768px) {
+
+  .htop {
+    padding: 10px 16px;   /* reduced from 13px 28px */
+  }
+
+  .logo h1 {
+    font-size: 16px;      /* smaller title */
+  }
+
+  .logo p {
+    font-size: 9px;
+  }
+
+  .embl {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .hinfo {
+    padding: 6px 16px;
+    gap: 10px;
+    font-size: 10px;
+    justify-content: center;
+  }
+
+  .hinfo span {
+    gap: 3px;
+  }
 }
 
 footer{position:relative;z-index:5;text-align:center;padding:22px;border-top:1px solid var(--border);color:var(--gray);font-size:11px;background:rgba(7,17,31,.9);line-height:1.8}
@@ -136,7 +168,6 @@ footer strong{color:var(--saffron)}
     <span>🗳️ Election: <strong>2026</strong></span>
     <span>👥 Total Voters: <strong>1,41,547</strong></span>
     <span>📋 Authority: <strong>Maharashtra Medical Council</strong></span>
-    <span>🔒 <strong>Secure Verification</strong></span>
   </div>
 </header>
 <div class="poster-wrap">
