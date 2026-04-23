@@ -195,6 +195,15 @@ function validate() {
 }
 
 async function doSearch() {
+  const last = localStorage.getItem("lastSearchTime");
+  const now = Date.now();
+
+  if (last && now - last < 4000) {
+    alert("Please wait 10 seconds before searching again.");
+    return;
+  }
+
+  localStorage.setItem("lastSearchTime", now);
   if (!validate()) return;
   const btn = document.getElementById('searchBtn');
   btn.disabled = true;
@@ -254,7 +263,7 @@ function showResult(d, mob) {
         <div class="rdet">
           <div class="di full"><div class="dl">👤 Full Name</div><div class="dv big">${e(d.name)}</div></div>
           <div class="di"><div class="dl">⚧ Gender</div><div class="dv">${d.sex==='M'?'♂ Male':d.sex==='F'?'♀ Female':e(d.sex)}</div></div>
-          <div class="di"><div class="dl">🔢 Electoral No.</div><div class="dv mo">${e(d.sr_no)}</div></div>
+          <div class="di"><div class="dl">🔢 Electoral No.</div><div class="dv mo">${e(d.electoral_no)}</div></div>
           <div class="di"><div class="dl">🆔 Registration No.</div><div class="dv mo">${e(d.reg_no)}</div></div>
           <div class="di"><div class="dl">📅 Registration Date</div><div class="dv">${e(d.reg_date)||'—'}</div></div>
           <div class="di"><div class="dl">📱 Mobile Recorded</div><div class="dv grn">✓ ${e(mob)}</div></div>
