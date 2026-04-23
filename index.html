@@ -1,26 +1,297 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MMC Voter Assistance 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMC Electoral Roll 2026 – Voter Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#07111f;--navy2:#0c1c33;
+  --saffron:#FF6200;--saffron2:#ff7c2a;--gold:#F5A800;
+  --teal:#00BCD4;--green:#22c55e;--red:#ef4444;
+  --white:#fff;--gray:#7a90b0;--light:#c8d8f0;
+  --card:rgba(255,255,255,0.045);--border:rgba(255,255,255,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse 90% 55% at 10% 5%,rgba(255,98,0,.08) 0%,transparent 55%),
+  radial-gradient(ellipse 70% 45% at 90% 90%,rgba(0,188,212,.07) 0%,transparent 55%);
+  pointer-events:none;z-index:0}
+
+/* TRICOLOR */
+.tri{height:4px;background:linear-gradient(90deg,#FF6200 33.33%,#fff 33.33% 66.66%,#138808 66.66%);position:relative;z-index:20}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:15;background:rgba(7,17,31,.97);border-bottom:1px solid rgba(255,98,0,.22);backdrop-filter:blur(24px)}
+.htop{display:flex;align-items:center;justify-content:space-between;padding:13px 28px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.logo{display:flex;align-items:center;gap:14px}
+.embl{width:52px;height:52px;background:linear-gradient(135deg,var(--saffron),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 22px rgba(255,98,0,.38);flex-shrink:0}
+.logo h1{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;letter-spacing:1.2px;line-height:1.15}
+.logo p{font-size:10.5px;color:var(--gray);margin-top:2px}
+.lbadge{display:flex;align-items:center;gap:7px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.28);padding:5px 13px;border-radius:20px;font-size:11px;color:var(--green);font-weight:600}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.hinfo{display:flex;gap:24px;padding:9px 28px;font-size:11px;color:var(--gray);align-items:center;flex-wrap:wrap}
+.hinfo span{display:flex;align-items:center;gap:5px}
+.hinfo strong{color:var(--saffron);font-weight:700}
+
+/* HERO */
+.hero{position:relative;z-index:5;text-align:center;padding:52px 20px 36px}
+.ebadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,98,0,.1);border:1px solid rgba(255,98,0,.28);padding:6px 18px;border-radius:20px;font-size:11px;color:var(--saffron2);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:20px;animation:fadeUp .6s ease both}
+.hero h2{font-family:'Rajdhani',sans-serif;font-size:clamp(28px,5vw,50px);font-weight:700;line-height:1.1;margin-bottom:12px;letter-spacing:.5px;animation:fadeUp .6s .1s ease both}
+.hero h2 span{background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:14px;color:var(--gray);max-width:460px;margin:0 auto 32px;line-height:1.7;animation:fadeUp .6s .2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-bottom:44px;animation:fadeUp .6s .3s ease both}
+.si{text-align:center}.sn{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--saffron)}.sl{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.sdv{width:1px;height:38px;background:var(--border);align-self:center}
+
+/* SEARCH CARD */
+.wrap{position:relative;z-index:5;max-width:680px;margin:0 auto;padding:0 16px 60px}
+.scard{background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,98,0,.25);border-radius:22px;padding:34px;backdrop-filter:blur(24px);box-shadow:0 28px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);animation:fadeUp .6s .4s ease both}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px;letter-spacing:.5px}
+.card-sub{font-size:12.5px;color:var(--gray);margin-bottom:26px;line-height:1.6}
+.req-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.28);padding:3px 10px;border-radius:20px;font-size:10px;color:#f87171;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+.fields{display:flex;flex-direction:column;gap:18px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.9px;display:flex;align-items:center;gap:6px}
+.fg label .req{color:var(--red);font-size:14px;line-height:1}
+.iw{position:relative}
+.iw .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.4;pointer-events:none}
+input[type=text],input[type=tel]{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:11px;padding:14px 14px 14px 44px;font-size:15px;color:#fff;font-family:'DM Sans',sans-serif;transition:all .2s;outline:none;letter-spacing:.3px}
+input::placeholder{color:rgba(255,255,255,.2)}
+input:focus{border-color:var(--saffron);background:rgba(255,98,0,.07);box-shadow:0 0 0 3px rgba(255,98,0,.12)}
+input.err{border-color:var(--red);background:rgba(239,68,68,.07)}
+.errmsg{font-size:11px;color:#f87171;margin-top:4px;display:none;align-items:center;gap:5px}
+.errmsg.show{display:flex}
+.sbtn{width:100%;margin-top:8px;background:linear-gradient(135deg,var(--saffron),#d94e00);border:none;border-radius:11px;padding:15px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:'Rajdhani',sans-serif;letter-spacing:1.5px;text-transform:uppercase;transition:all .25s;box-shadow:0 6px 22px rgba(255,98,0,.32);display:flex;align-items:center;justify-content:center;gap:10px}
+.sbtn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,98,0,.46)}
+.sbtn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.disclaimer{margin-top:18px;background:rgba(0,188,212,.07);border:1px solid rgba(0,188,212,.18);border-radius:11px;padding:12px 16px;font-size:12px;color:rgba(144,224,239,.85);line-height:1.6}
+.disclaimer strong{color:var(--teal)}
+
+/* RESULT */
+#resArea{position:relative;z-index:5;max-width:680px;margin:0 auto;padding:0 16px 60px}
+.rcard{background:linear-gradient(145deg,rgba(34,197,94,.07),rgba(34,197,94,.02));border:1px solid rgba(34,197,94,.28);border-radius:20px;padding:28px;position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.rcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--green),#16a34a)}
+.rcard-hd{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.chk{width:42px;height:42px;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rcard-hd h3{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--green)}
+.rcard-hd p{font-size:12px;color:var(--gray);margin-top:1px}
+.rdet{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.di{display:flex;flex-direction:column;gap:4px}
+.dl{font-size:9.5px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.9px}
+.dv{font-size:13.5px;color:var(--light);line-height:1.45}
+.dv.mo{font-family:'Rajdhani',sans-serif;font-size:16px;color:var(--saffron2);font-weight:700}
+.dv.grn{color:var(--green);font-weight:600}
+.dv.big{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#fff}
+.full{grid-column:1/-1}
+.new-search{margin-top:18px;width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:12px;font-size:14px;font-weight:600;color:var(--light);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.new-search:hover{border-color:var(--saffron);color:var(--saffron)}
+.notfound{background:linear-gradient(145deg,rgba(239,68,68,.07),rgba(239,68,68,.02));border:1px solid rgba(239,68,68,.28);border-radius:20px;padding:28px;text-align:center;animation:fadeUp .5s ease both}
+.notfound .ni{font-size:44px;margin-bottom:14px}
+.notfound h3{font-family:'Rajdhani',sans-serif;font-size:20px;color:#f87171;margin-bottom:8px}
+.notfound p{font-size:13px;color:var(--gray);line-height:1.6}
+
+/* SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{position:relative;z-index:5;text-align:center;padding:22px;border-top:1px solid var(--border);color:var(--gray);font-size:11px;background:rgba(7,17,31,.9);line-height:1.8}
+footer strong{color:var(--saffron)}
+</style>
 </head>
+<body>
+<div class="tri"></div>
+<header>
+  <div class="htop">
+    <div class="logo">
+      <div class="embl">⚕️</div>
+      <div>
+        <h1>MMC ELECTORAL ROLL 2026</h1>
+        <p>Maharashtra Medical Council · Official Voter Verification Portal</p>
+      </div>
+    </div>
+    <div class="lbadge"><div class="dot"></div>Official &amp; Secure</div>
+  </div>
+  <div class="hinfo">
+    <span>🗳️ Election: <strong>2026</strong></span>
+    <span>👥 Total Voters: <strong>{{ "{:,}".format(total) }}</strong></span>
+    <span>📋 Authority: <strong>Maharashtra Medical Council</strong></span>
+    <span>🔒 <strong>Secure Verification</strong></span>
+  </div>
+</header>
 
-<body style="font-family:Arial;text-align:center;margin-top:60px;">
+<section class="hero">
+  <div class="ebadge">🗳️ MMC Election 2026 · Voter Verification</div>
+  <h2>Verify Your <span>Electoral Details</span></h2>
+  <p>Enter your MMC Registration Number and Mobile Number to retrieve your official 2026 electoral record.</p>
+  <div class="stats">
+    <div class="si"><div class="sn">{{ "{:,}".format(total) }}</div><div class="sl">Registered Voters</div></div>
+    <div class="sdv"></div>
+    <div class="si"><div class="sn">2026</div><div class="sl">Election Year</div></div>
+    <div class="sdv"></div>
+    <div class="si"><div class="sn">MMC</div><div class="sl">Maharashtra</div></div>
+  </div>
+</section>
 
-<h2>MMC Voter Assistance 2026</h2>
+<div class="wrap" id="searchWrap">
+  <div class="scard">
+    <div class="card-title">🔐 Voter Verification <span class="req-badge">Both Fields Required</span></div>
+    <div class="card-sub">Enter your MMC Registration Number and your 10-digit Mobile Number to view your electoral record.</div>
+    <div class="fields">
+      <div class="fg">
+        <label>🔢 MMC Registration Number <span class="req">*</span></label>
+        <div class="iw">
+          <span class="ic">🆔</span>
+          <input type="text" id="regIn" placeholder="e.g. 2024053376" autocomplete="off" maxlength="20">
+        </div>
+        <div class="errmsg" id="regErr">⚠ Please enter your MMC Registration Number</div>
+      </div>
+      <div class="fg">
+        <label>📱 Mobile Number <span class="req">*</span></label>
+        <div class="iw">
+          <span class="ic">📱</span>
+          <input type="tel" id="mobIn" placeholder="Enter 10-digit mobile number" autocomplete="off" maxlength="10">
+        </div>
+        <div class="errmsg" id="mobErr">⚠ Please enter a valid 10-digit mobile number</div>
+      </div>
+      <button class="sbtn" id="searchBtn" onclick="doSearch()">
+        🔍 &nbsp;VERIFY MY DETAILS
+      </button>
+    </div>
+    <div class="disclaimer">
+      <strong>🔒 Privacy Notice:</strong> Your mobile number is collected solely to maintain voter contact records for the MMC 2026 Election. It will not be shared with any third party.
+    </div>
+  </div>
+</div>
 
-<input id="reg" placeholder="Registration Number"><br><br>
-<input id="mobile" placeholder="Mobile Number"><br><br>
+<div id="resArea"></div>
 
-<button onclick="search()">Search</button>
+<footer>
+  <strong>Maharashtra Medical Council</strong> · Electoral Roll 2026 · Official Voter Verification Portal<br>
+  For registration corrections, contact MMC at mmcmumbai@gmail.com &nbsp;|&nbsp; IMA Maharashtra State
+</footer>
 
-<p style="font-size:12px;">
-Mobile number is collected only for voter assistance purposes.
-</p>
+<script>
+function validate() {
+  let ok = true;
+  const reg = document.getElementById('regIn').value.trim();
+  const mob = document.getElementById('mobIn').value.trim();
+  const ri = document.getElementById('regIn'), re = document.getElementById('regErr');
+  const mi = document.getElementById('mobIn'), me = document.getElementById('mobErr');
+  if (!reg) { ri.classList.add('err'); re.classList.add('show'); ok = false; }
+  else       { ri.classList.remove('err'); re.classList.remove('show'); }
+  if (!mob || !/^[6-9]\d{9}$/.test(mob)) {
+    mi.classList.add('err');
+    me.textContent = !mob ? '⚠ Please enter your 10-digit mobile number'
+                          : '⚠ Enter a valid Indian mobile number (starts with 6–9)';
+    me.classList.add('show'); ok = false;
+  } else { mi.classList.remove('err'); me.classList.remove('show'); }
+  return ok;
+}
 
-<div id="result"></div>
+async function doSearch() {
+  if (!validate()) return;
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> &nbsp;VERIFYING…';
 
-<script src="script.js"></script>
+  const reg = document.getElementById('regIn').value.trim();
+  const mob = document.getElementById('mobIn').value.trim();
 
+  const API = "https://qcpsmbetqgbucuoammik.supabase.co/rest/v1";
+  const KEY = "sb_publishable_Yo_hiLGl63AnMwj373uTKg_qLQ2Rr1a";
+
+  const res = await fetch(
+    `${API}/Voters?reg_no=eq.${reg}`,
+    {
+      headers: {
+        "apikey": KEY,
+        "Authorization": "Bearer " + KEY
+      }
+    }
+  );
+
+  const data = await res.json();
+
+  if (data.length === 0) {
+    showResult({ found: false, reg_no: reg }, mob);
+  } else {
+    showResult({ found: true, ...data[0] }, mob);
+
+    // Save mobile number
+    await fetch(`${API}/search_logs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": KEY,
+        "Authorization": "Bearer " + KEY
+      },
+      body: JSON.stringify({
+        registration_no: reg,
+        mobile_no: mob
+      })
+    });
+  }
+  btn.disabled = false;
+  btn.innerHTML = '🔍 &nbsp;VERIFY MY DETAILS';
+}
+
+function showResult(d, mob) {
+  const area = document.getElementById('resArea');
+  if (d.found) {
+    const qs = (d.qualification || '').split('|').map(s => s.trim()).filter(Boolean).join(' | ') || '—';
+    area.innerHTML = `
+      <div class="rcard">
+        <div class="rcard-hd">
+          <div class="chk">✅</div>
+          <div><h3>Voter Record Found</h3><p>Confirmed in MMC Electoral Roll 2026</p></div>
+        </div>
+        <div class="rdet">
+          <div class="di full"><div class="dl">👤 Full Name</div><div class="dv big">${e(d.name)}</div></div>
+          <div class="di"><div class="dl">⚧ Gender</div><div class="dv">${d.sex==='M'?'♂ Male':d.sex==='F'?'♀ Female':e(d.sex)}</div></div>
+          <div class="di"><div class="dl">🔢 Electoral No.</div><div class="dv mo">${e(d.sr_no)}</div></div>
+          <div class="di"><div class="dl">🆔 Registration No.</div><div class="dv mo">${e(d.reg_no)}</div></div>
+          <div class="di"><div class="dl">📅 Registration Date</div><div class="dv">${e(d.reg_date)||'—'}</div></div>
+          <div class="di"><div class="dl">📱 Mobile Recorded</div><div class="dv grn">✓ ${e(mob)}</div></div>
+          <div class="di full"><div class="dl">🎓 Qualification</div><div class="dv">${e(qs)}</div></div>
+          <div class="di full"><div class="dl">📍 Address</div><div class="dv">${e(d.address)||'—'}</div></div>
+        </div>
+        <button class="new-search" onclick="resetSearch()">← Search Another Record</button>
+      </div>`;
+  } else {
+    area.innerHTML = `
+      <div class="notfound">
+        <div class="ni">🔍</div>
+        <h3>No Record Found</h3>
+        <p>Registration number <strong style="color:#f87171">${e(d.reg_no)}</strong> was not found in the MMC Electoral Roll 2026.<br><br>
+        Please verify your number or contact the MMC office.</p>
+        <button class="new-search" style="margin-top:18px;display:block;width:100%" onclick="resetSearch()">← Try Again</button>
+      </div>`;
+  }
+  document.getElementById('resArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetSearch() {
+  document.getElementById('resArea').innerHTML = '';
+  document.getElementById('regIn').value = '';
+  document.getElementById('mobIn').value = '';
+  document.getElementById('searchWrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function e(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.addEventListener('keydown', ev => { if (ev.key === 'Enter') doSearch(); });
+document.getElementById('mobIn').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '').slice(0, 10);
+});
+</script>
 </body>
 </html>
