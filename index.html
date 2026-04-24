@@ -301,6 +301,18 @@ function showResult(d, mob) {
   const area = document.getElementById('resArea');
   if (d.found) {
     const qs = (d.qualification || '').split('|').map(s => s.trim()).filter(Boolean).join(' | ') || '—';
+    const booth = getPollBooth(d.address);
+    let boothHtml = '';
+    if (booth) {
+      const dirLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(booth.name)}`;
+      boothHtml = `
+        <div class="di full" style="margin-top:8px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.1);">
+          <div class="dl">🗳️ Poll Booth Location (${booth.district})</div>
+          <div class="dv big" style="color:var(--saffron); margin-bottom:8px;">${e(booth.name)}</div>
+          <a href="${booth.link}" target="_blank" style="display:inline-block; padding:8px 16px; background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.4); border-radius:8px; color:var(--green); text-decoration:none; font-weight:700; font-size:13px; margin-right:8px;">📍 View on Map</a>
+          <a href="${dirLink}" target="_blank" style="display:inline-block; padding:8px 16px; background:rgba(255,98,0,0.15); border:1px solid rgba(255,98,0,0.4); border-radius:8px; color:var(--saffron); text-decoration:none; font-weight:700; font-size:13px;">🗺️ Get Directions</a>
+        </div>`;
+    }
     area.innerHTML = `
       <div class="rcard">
         <div class="rcard-hd">
@@ -315,7 +327,8 @@ function showResult(d, mob) {
           <div class="di"><div class="dl">📅 Registration Date</div><div class="dv">${e(d.reg_date)||'—'}</div></div>
           <div class="di"><div class="dl">📱 Mobile Recorded</div><div class="dv grn">✓ ${e(mob)}</div></div>
           <div class="di full"><div class="dl">🎓 Qualification</div><div class="dv">${e(qs)}</div></div>
-          <div class="di full"><div class="dl">📍 Address</div><div class="dv">${e(d.address)||'—'}</div></div>
+          <div class="di full"><div class="dl">🏠 Registered Address</div><div class="dv">${e(d.address)||'—'}</div></div>
+          ${boothHtml}
         </div>
         <button class="new-search" onclick="resetSearch()">← Search Another Record</button>
       </div>`;
@@ -337,6 +350,60 @@ function resetSearch() {
   document.getElementById('regIn').value = '';
   document.getElementById('mobIn').value = '';
   document.getElementById('searchWrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+const POLL_BOOTHS = [
+  { district: "Mumbai Region", match: ["mumbai", "chembur", "mulund", "byculla", "ghatkopar", "kurla"], name: "Grant Medical College & Sir J. J. Group of Hospitals, Byculla", link: "https://maps.google.com/?q=Grant+Medical+College+J.J+Hospital+Mumbai" },
+  { district: "Mumbai Suburban", match: ["suburban", "bandra", "andheri", "borivali", "kandivali", "malad", "goregaon", "ram mandir", "jogeshwari", "vile parle", "khar road", "mahim", "matunga", "dadar", "santacruz", "vakola"], name: "Mumbai Public School, Nehru Road, Vakola Bridge", link: "https://share.google/EhQPg2Qt8v5OfyD72" },
+  { district: "Thane", match: ["thane", "ambernath", "badlapur", "bhiwandi", "kalyan", "dombivali", "mira bhayander", "navi mumbai", "shahapur"], name: "St. John Baptist High School & Junior College, Thane", link: "https://maps.google.com/?q=Smt+Sushiladevi+Deshmukh+College+Thane" },
+  { district: "Palghar", match: ["palghar", "boisar", "dahanu", "nallasopara", "vasai", "virar", "wada"], name: "Rural Hospital, Kacheri Road, Palghar", link: "https://maps.google.com/?q=Rural+Hospital+Palghar" },
+  { district: "Raigad", match: ["raigad", "alibag", "karjat", "kharghar", "khopoli", "mahad", "mangaon", "panvel", "pen", "roha"], name: "Government Medical College, Alibag", link: "https://maps.google.com/?q=Government+Medical+College+Alibag" },
+  { district: "Ratnagiri", match: ["ratnagiri", "dapoli", "khed", "rajapur", "sangameshwar", "chiplun"], name: "Government Medical College, Ratnagiri", link: "https://maps.google.com/?q=Government+Medical+College+Ratnagiri" },
+  { district: "Sindhudurg", match: ["sindhudurg", "kankavali", "kudal", "malvan"], name: "District General Hospital, Sindhudurg", link: "https://maps.google.com/?q=District+Hospital+Sindhudurg" },
+  { district: "Nashik", match: ["nashik", "lasalgaon", "malegaon", "manmad", "nandgaon", "pimpalgaon"], name: "Matoshri Rampyaribai Sarada Kanya Vidyamandir, Nashik", link: "https://maps.google.com/?q=MVP+Samaj+Nashik" },
+  { district: "Dhule", match: ["dhule", "dondaicha", "sakri", "shirpur"], name: "Shri Bhausaheb Hire Government Medical College, Dhule", link: "https://maps.google.com/?q=SBH+Government+Medical+College+Dhule" },
+  { district: "Nandurbar", match: ["nandurbar", "navapur", "shahada", "taloda"], name: "Jananayak Birsa Munda Government Medical College, Nandurbar", link: "https://maps.google.com/?q=Government+Medical+College+Nandurbar" },
+  { district: "Jalgaon", match: ["jalgaon", "amalner", "bhusawal", "chalisgaon", "chopda", "dharangaon", "jamner", "muktainagar"], name: "Raosaheb Rupchand Vidyalaya, Jalgaon", link: "https://maps.google.com/?q=Raosaheb+Rupchand+Vidyalaya+Jalgaon" },
+  { district: "Ahmednagar", match: ["ahmednagar", "ahilyanagar", "akole", "jamkhed", "karjat", "kolhar", "bagwati", "kopargaon", "loni", "pravara", "parner", "shrirampur"], name: "Dr. N. J. Patil Pharmacy College, Varant", link: "https://maps.google.com/?q=Dr+N+B+Pawar+College+Ahmednagar" },
+  { district: "Pune", match: ["pune", "bhor", "daund", "hadaspar", "indapur", "junner", "lonand", "neera", "lonavla", "pimpri", "chinchwad", "bhosari"], name: "B. J. Medical College, Pune", link: "https://maps.google.com/?q=B+J+Medical+College+Pune" },
+  { district: "Satara", match: ["satara", "dahiwadi", "karad", "koregaon", "mayani", "mhaswad", "phaltan", "vaduj", "wai"], name: "District Hospital, Satara", link: "https://maps.google.com/?q=District+Hospital+Satara" },
+  { district: "Sangli", match: ["sangli", "atpadi", "islampur", "jath", "kavathe mahankal", "miraj", "palus", "tasgaon", "vita"], name: "Padmabhushan Vasantdada Patil Government Hospital, Sangli", link: "https://maps.app.goo.gl/dUyHBTbWtaqRqqt76" },
+  { district: "Solapur", match: ["solapur", "akkalkot", "akluj", "barshi", "karmala", "kurduwadi", "mangalwedha", "pandharpur", "sangola", "tembhurni"], name: "Dr. Vaishampayan Memorial Government Medical College, Solapur", link: "https://maps.google.com/?q=Government+Medical+College+Solapur" },
+  { district: "Kolhapur", match: ["kolhapur", "ajara", "bidri", "gadhinglaj", "gargoti", "ichalkaranji", "jaysingpur", "kurundwad", "pargaon", "peth"], name: "Esther Patton High School, Kolhapur", link: "https://maps.google.com/?q=CPR+Hospital+Kolhapur" },
+  { district: "Aurangabad", match: ["aurangabad", "sambhaji", "gangapur", "kannad", "paithan", "sillod", "vaijapur"], name: "Bajaj Teaching Complex, Government Medical College, Chhatrapati Sambhajinagar", link: "https://maps.google.com/?q=Government+Medical+College+Aurangabad+Bajaj+Complex" },
+  { district: "Jalna", match: ["jalna", "ambad", "badnapur", "partur"], name: "District Hospital, Jalna", link: "https://maps.google.com/?q=District+Hospital,Jalna" },
+  { district: "Parbhani", match: ["parbhani", "gangakhed", "jintoor", "manwath", "pathri", "sailu"], name: "District General Hospital, Parbhani", link: "https://maps.google.com/?q=District+Hospital+Parbhani" },
+  { district: "Hingoli", match: ["hingoli", "basmath"], name: "Government Nursing College, Hingoli", link: "https://maps.google.com/?q=District+Hospital+Hingoli" },
+  { district: "Beed", match: ["beed", "ashti", "dharur", "wadwani", "georai", "kaij", "majalgaon", "parli", "yogeshwari"], name: "Hospital Training Centre, District Hospital, Beed", link: "https://maps.google.com/?q=District+Hospital+Beed" },
+  { district: "Nanded", match: ["nanded", "bhokar", "degloor", "kinwat", "loha", "mukhed"], name: "Shri Guru Gobind Singhji Government Hospital, Nanded", link: "https://maps.google.com/?q=Government+Medical+College+Nanded" },
+  { district: "Dharashiv", match: ["dharashiv", "osmanabad", "kallam", "omerga", "paranda", "tuljapur"], name: "Government Medical College, Dharashiv", link: "https://maps.google.com/?q=Government+Medical+College+Dharashiv" },
+  { district: "Latur", match: ["latur", "ahmedpur", "nilanga", "udgir"], name: "Maharashtra University of Health Sciences Regional Centre, Latur", link: "https://maps.google.com/?q=Maharashtra+University+of+Health+Sciences+Regional+Centre,Latur" },
+  { district: "Buldhana", match: ["buldhana", "chikhali", "deulgaon", "raja", "khamgaon", "lonar", "malkapur", "mehkar", "nandura", "shegaon", "sindkhed"], name: "Government Medical College, Buldhana", link: "https://maps.google.com/?q=Government+Medical+College+Buldhana" },
+  { district: "Akola", match: ["akola", "akot", "malegaon", "murtizapur", "telhara", "barsitakli"], name: "Government Medical College, Akola", link: "https://maps.google.com/?q=Government+Medical+College+Akola" },
+  { district: "Washim", match: ["washim", "karanja", "risod"], name: "Government Medical College, Washim", link: "https://maps.google.com/?q=Government+Medical+College+Washim" },
+  { district: "Amravati", match: ["amravati", "anjangaon", "chandurbazar", "daryapur", "dhamangaon", "morshi", "paratwada"], name: "Government Medical College, Amravati", link: "https://maps.google.com/?q=Government+Medical+College+Amravati" },
+  { district: "Yavatmal", match: ["yavatmal", "arni", "digras", "pandharkawada", "pusad", "umerkhed", "wani", "babulgaon", "darwha", "ghantanji", "ner", "yamun"], name: "Vasantrao Naik Government Medical College, Yavatmal", link: "https://maps.google.com/?q=Government+Medical+College+Yavatmal" },
+  { district: "Wardha", match: ["wardha", "arvi", "hinganghat", "pulgaon"], name: "District General Hospital Campus, Wardha", link: "https://maps.google.com/?q=District+Hospital+Wardha" },
+  { district: "Nagpur", match: ["nagpur", "kamptee", "kanhan", "katol", "narkhed", "ramtek", "saoner", "umred"], name: "Government Medical College & Super Speciality Hospital, Nagpur", link: "https://maps.google.com/?q=Government+Medical+College+Nagpur" },
+  { district: "Bhandara", match: ["bhandara", "lakhandur", "pauni", "sakoli", "tumsar"], name: "District General Hospital Premises, Bhandara", link: "https://maps.google.com/?q=District+Hospital+Bhandara" },
+  { district: "Gondia", match: ["gondia"], name: "Government Medical College & Hospital, Gondia", link: "https://maps.google.com/?q=Government+Medical+College+Gondia" },
+  { district: "Chandrapur", match: ["chandrapur", "anandwan", "warora", "ballarpur", "bramhapuri", "ghughus"], name: "Government Building, Near Dr. Ambedkar Arts, Chandrapur", link: "https://maps.google.com/?q=Government+Medical+College+Chandrapur" },
+  { district: "Gadchiroli", match: ["gadchiroli"], name: "District Hospital Training Centre, Gadchiroli", link: "https://maps.google.com/?q=District+Hospital+Gadchiroli" },
+  { district: "Outsiders", match: ["kerala", "gujarat", "karnataka", "delhi", "madhya pradesh", "rajasthan", "goa", "andhra pradesh", "telangana", "tamil nadu", "uttar pradesh", "bihar", "chhattisgarh", "jharkhand", "west bengal", "odisha", "punjab", "haryana", "assam", "himachal", "uttarakhand", "jammu"], name: "Polling center for voters from outside Maharashtra state and from outside India", link: "https://maps.google.com/?q=Maharashtra+Medical+Council+Mumbai" }
+];
+
+function getPollBooth(address) {
+  if (!address) return null;
+  const addr = address.toLowerCase();
+  
+  // Find matching district
+  for (let p of POLL_BOOTHS) {
+    if (p.match.some(m => addr.includes(m.toLowerCase()))) {
+      return p;
+    }
+  }
+  
+  return null;
 }
 
 function e(s) {
